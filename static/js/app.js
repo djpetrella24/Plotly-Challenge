@@ -2,7 +2,7 @@
 function dropDown() {
     d3.json("samples.json").then((data) => {
         var sampleNames = data.names
-        console.log(sampleNames)
+
         // Use D3 to select the dropdown menu
         var dropdownMenu = d3.select("#selDataset");
         sampleNames.forEach((x) => {
@@ -15,11 +15,13 @@ function dropDown() {
 
 }
 
+// declare the functions so that tables & charts draw from the same datset. 
 function optionChanged(newID) {
     buildTables(newID)
     buildCharts(newID)
 }
 
+// create the function to build the tables. 
 function buildTables(sampleID) {
     d3.json("samples.json").then((data) => {
         var tableInfo = data.metadata
@@ -38,6 +40,7 @@ function buildTables(sampleID) {
 
 }
 
+// Create the function to populate the charts. 
 function buildCharts(sampleID) {
     d3.json("samples.json").then((data) => {
         var tableInfo = data.samples
@@ -47,7 +50,7 @@ function buildCharts(sampleID) {
         var sampleValues = filterData[0].sample_values;
         var otuLabels = filterData[0].otu_labels;
 
-
+        // Create the first trace. 
         var trace = {
             x: sampleValues.slice(0, 10),
             y: otuIDs.slice(0, 10).map(x => `otu ${x}`),
@@ -55,19 +58,20 @@ function buildCharts(sampleID) {
             orientation: 'h'
         };
 
-        // // Create the data array for our plot
+        // // Create the data array for our plot.
         var data = [trace];
 
-        // // Define the plot layout
+        // // Define the bar plot layout. 
         var layout = {
             title: "Top 10 OTUs",
             xaxis: { title: "otu_labels" },
             yaxis: { title: "otu_ids" }
         };
 
-        // // Plot the chart to a div tag with id "bar-plot"
+        // // Plot the chart to the div tag. 
         Plotly.newPlot("bar", data, layout);
-
+        
+        // Build the second trace. 
         var trace2 = {
             x: otuIDs,
             y: sampleValues,
@@ -80,7 +84,7 @@ function buildCharts(sampleID) {
 
         }
 
-        // // Create the data array for our plot
+        // // Create the data & formatting for the bubble plot. 
         var data = [trace2];
         var layout = {
             title: 'Marker Size and Color',
@@ -89,6 +93,7 @@ function buildCharts(sampleID) {
             width: 600
         };
 
+        // Plot the bubble chart
         Plotly.newPlot('bubble', data, layout);
 
     })
