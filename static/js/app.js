@@ -78,7 +78,7 @@ function buildCharts(sampleID) {
             mode: 'markers',
             marker: {
                 color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
-                opacity: [1, 0.8, 0.6, 0.4],
+                opacity: [0.4],
                 size: [40, 60, 80, 100]
             }
 
@@ -87,7 +87,7 @@ function buildCharts(sampleID) {
         // // Create the data & formatting for the bubble plot. 
         var data = [trace2];
         var layout = {
-            title: 'Marker Size and Color',
+            title: 'OTUs',
             showlegend: false,
             height: 600,
             width: 600
